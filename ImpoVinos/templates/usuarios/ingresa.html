@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpoVinos - Ingreso</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    /* Estilo para el botón de admin (discreto) */
+    .admin-btn {
+      margin-top: 20px;
+      background: none;
+      border: none;
+      color: #666;
+      font-size: 0.9em;
+      text-decoration: underline;
+      cursor: pointer;
+      display: block;
+      text-align: center;
+      opacity: 0.6;
+    }
+
+    .admin-btn:hover {
+      opacity: 1;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  {% if messages %}
+    <ul class="messages-container">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="site">
+    {% include 'misc/navbar.html' %} 
+    
+    <section class="section-p1">
+      <h2>Inicia Sesión</h2>
+      <p>Accede a tu cuenta para comprar y revisar tus pedidos.</p>
+
+      <form class="login-form" method="post">
+        {% csrf_token %}
+        <label for="correo">Nombre de usuario</label>
+        <input type="text" id="correo" name="correo" required>
+
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" name="clave" required>
+
+        <button type="submit">Ingresar</button>
+
+        <p class="recuperar"><a href="{% url 'recuperar' %}">¿Olvidaste tu contraseña?</a></p>
+        <p class="registro">¿No tienes cuenta? <a href="{% url 'registro' %}">Crear cuenta</a></p>
+        <a href="{% url 'ingresa_admin' %}" class="admin-btn">Ingresar como administrador</a>
+      </form>
+    </section>
+
+    <footer>
+      <div class="footer">
+        <p>© Todos los derechos reservados, Grupo 10 Semana 6</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

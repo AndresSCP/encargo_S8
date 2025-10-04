@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprar - ImpoVinos</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="site">
+    
+    {% include 'misc/navbar.html' %} 
+
+
+    <!-- MAIN -->
+    <main class="comprar-main">
+      <div class="opcion">
+        <a href="{% url 'nacionales' %}">
+          <img src="{% static 'assets/Vino-Chile-UCM-ouzc8o3h47dwb3p3ar58rpqe3s0e1lrzhzta4npf8m.jpg' %}" alt="Nacionales">
+          <div class="overlay">Nacional</div>
+        </a>
+      </div>
+
+      <div class="opcion">
+        <a href="{% url 'importados' %}">
+          <img src="{% static 'assets/red-wine-2443699_1280.jpg' %}" alt="Importados">
+          <div class="overlay">Importados</div>
+        </a>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer">
+        <p> © Todos los derechos reservados, Grupo 10 Semana 6</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

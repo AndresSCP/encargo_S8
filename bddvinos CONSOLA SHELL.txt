@@ -1,0 +1,21 @@
+from ImpoVinos.models import Categoria, Vino
+
+cat_nac, _ = Categoria.objects.get_or_create(nombre="Nacional")
+cat_imp, _ = Categoria.objects.get_or_create(nombre="Importado")
+
+# Vinos nacionales
+Vino.objects.get_or_create(nombre='Santa Ema Amplus Cabernet Sauvignon', pais_origen='Chile', anio=2021, precio=85000, stock=45, categoria=cat_nac)
+Vino.objects.get_or_create(nombre='Morandé Edición Limitada Carménère', pais_origen='Chile', anio=2020, precio=85000, stock=50, categoria=cat_nac)
+Vino.objects.get_or_create(nombre='Casas del Bosque Botanic Series Chardonnay', pais_origen='Chile', anio=2022, precio=70000, stock=30, categoria=cat_nac)
+Vino.objects.get_or_create(nombre='Caliterra Pétreo Malbec', pais_origen='Chile', anio=2021, precio=35000, stock=60, categoria=cat_nac)
+Vino.objects.get_or_create(nombre='Viu Manent Secreto Rosé', pais_origen='Chile', anio=2023, precio=15000, stock=75, categoria=cat_nac)
+Vino.objects.get_or_create(nombre='Morandé Vitis Unica Sauvignon Blanc', pais_origen='Chile', anio=2022, precio=68000, stock=40, categoria=cat_nac)
+
+# Vinos importados
+Vino.objects.get_or_create(nombre='Solar Viejo You & Me Albariño', pais_origen='España', anio=2022, precio=20000, stock=50, categoria=cat_imp)
+Vino.objects.get_or_create(nombre='Luigi Bosca De Sangre Cabernet Sauvignon', pais_origen='Argentina', anio=2019, precio=21000, stock=30, categoria=cat_imp)
+Vino.objects.get_or_create(nombre='El Enemigo Chardonnay', pais_origen='Argentina', anio=2021, precio=41000, stock=20, categoria=cat_imp)
+Vino.objects.get_or_create(nombre='Catena Zapata Angelica Zapata Malbec', pais_origen='Argentina', anio=2018, precio=72000, stock=15, categoria=cat_imp)
+Vino.objects.get_or_create(nombre='Champagne Pol Roger Sir Winston Churchill', pais_origen='Francia', anio=2013, precio=470000, stock=10, categoria=cat_imp)
+Vino.objects.get_or_create(nombre='Freixenet Pinot Grigio', pais_origen='Italia', anio=2022, precio=22000, stock=25, categoria=cat_imp)
+

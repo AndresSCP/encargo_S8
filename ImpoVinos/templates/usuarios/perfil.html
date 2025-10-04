@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpoVinos - Perfil</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="site">
+    
+     {% include 'misc/navbar.html' %} 
+
+    <!-- PERFIL -->
+    <section class="section-p1">
+      <h2>Mi Perfil</h2>
+      <p>Bienvenido a tu perfil, aquí puedes ver tus datos.</p>
+
+      <div class="login-form">
+        <label>Nombre completo</label>
+        <input type="text" value="Juan Pérez" disabled>
+
+        <label>Correo</label>
+        <input type="email" value="juanperez@email.com" disabled>
+
+        <label>Dirección</label>
+        <input type="text" value="Calle Falsa 123, Santiago" disabled>
+
+        <label>Contraseña</label>
+        <input type="password" value="12345678" disabled>
+        <a href="{% url 'modificarPerfil' %}">
+        <button>Editar Datos</button>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer">
+        <p>© Todos los derechos reservados, Grupo 10 Semana 6</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

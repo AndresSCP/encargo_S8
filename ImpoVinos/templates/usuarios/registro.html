@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpoVinos - Registro</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<body>
+  <div class="site">
+    
+    {% include 'misc/navbar.html' %} 
+
+    <section class="section-p1">
+      <h2>Crear Cuenta</h2>
+      <p>Regístrate para poder comprar y revisar tus pedidos.</p>
+
+      <form id="registroForm" class="login-form">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" name="clave" required>
+
+        <label for="clave2">Repite tu contraseña</label>
+        <input type="password" id="clave2" name="clave2" required>
+
+        <p id="error" style="display:none;"></p>
+
+        <button type="submit">Registrarse</button>
+        <p class="registro">¿Ya tienes cuenta? <a href="{% url 'ingresa' %}">Inicia sesión</a></p>
+      </form>
+    </section>
+
+    <footer>
+      <div class="footer">
+        <p>© Todos los derechos reservados, Grupo 10 Semana 6</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{% static 'scripts/scripts.js' %}"></script>
+
+</body>
+</html>

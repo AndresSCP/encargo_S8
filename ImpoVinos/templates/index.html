@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpoVinos</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  {% if messages %}
+    <ul class="messages-container">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="site">
+    {% include 'misc/navbar.html' %} 
+
+    <section id="hero">
+      <h3>Las mejores selecciones</h3>
+      <h1>Vinos Nacionales e Importados</h1>
+      <h4>Cepas variadas, Calidad asegurada</h4>
+      <a href="{% url 'comprar' %}">
+        <button>Comprar</button>
+      </a>
+    </section>
+
+    <footer>
+      <div class="footer">
+        <p>© Todos los derechos reservados, Grupo 10 Semana 6</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
