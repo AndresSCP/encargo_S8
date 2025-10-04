@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpoVinos - Importados</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="site">
+    
+    {% include 'misc/navbar.html' %} 
+
+    <section class="section-p1">
+      <h2>Vinos Importados</h2>
+      <section class="bloques-categorias">
+            <div class="categoria">
+                <a href="#"><img src="{% static 'assets/albarinoesp.webp' %}" alt="Albariño España"></a>
+                <h5>$20.000</h5>
+                <h4 class="piefoto">Solar Viejo You & Me Albariño - España</h4>
+                <button class="btn-comprar">Agregar al carrito</button>
+            </div>
+            <div class="categoria">
+                <a href="#"><img src="{% static 'assets/cabsavarg.webp' %}" alt="Cabernet Sauvignon Argentina"></a>
+                <h5>$21.000</h5>
+                <h4 class="piefoto">Luigi Bosca De Sangre Cabernet Sauvignon - Argentina</h4>
+                <button class="btn-comprar">Agregar al carrito</button>
+            </div>
+            <div class="categoria">
+                <a href="#"><img src="{% static 'assets/chardonnayarg.webp' %}" alt="Chardonnay Argentina"></a>
+                <h5>$41.000</h5>
+                <h4 class="piefoto">El Enemigo Chardonnay - Argentina</h4>
+                <button class="btn-comprar">Agregar al carrito</button>
+            </div>
+            <div class="categoria">
+                <a href="#"><img src="{% static 'assets/malbecarg.webp' %}" alt="Malbec Argentina"></a>
+                <h5>$72.000</h5>
+                <h4 class="piefoto">Catena Zapata Angelica Zapata Malbec - Argentina</h4>
+                <button class="btn-comprar">Agregar al carrito</button>
+            </div>
+            <div class="categoria">
+                <a href="#"><img src="{% static 'assets/champagne.webp' %}" alt="Champagne Francia"></a>
+                <h5>$470.000</h5>
+                <h4 class="piefoto">Champagne Pol Roger Sir Winston Churchill - Francia</h4>
+                <button class="btn-comprar">Agregar al carrito</button>
+            </div>
+            <div class="categoria">
+                <a href="#"><img src="{% static 'assets/pinotgrigioita.webp' %}" alt="Pinot Grigio Italia"></a>
+                <h5>$22.000</h5>
+                <h4 class="piefoto">Freixenet Pinot Grigio - Italia</h4>
+                <button class="btn-comprar">Agregar al carrito</button>
+            </div>
+        </section>
+    </section>
+
+    <footer>
+      <div class="footer">
+        <p>© Todos los derechos reservados, Grupo 10 Semana 6</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

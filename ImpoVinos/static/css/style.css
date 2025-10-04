@@ -1,0 +1,526 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+/* Reglas Generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Sansation", sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.site {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+h1 { font-size: 65px; line-height: 64px; color: #222; }
+h2 { font-size: 46px; line-height: 54px; color: #222; }
+h3 { font-size: 35px; line-height: 54px; color: #9d4b4b; }
+h4 { font-size: 20px; color: #553636; }
+h6 { font-weight: 700; font-size: 12px; }
+
+p {
+    font-size: 16px;
+    color: #465b52;
+    margin: 15px 0 20px 0;
+}
+
+.section-p1 { padding: 40px 80px; }
+.section-m1 { margin: 40px 0; }
+
+/* ----------------------------------------------------- */
+
+/* HEADER & NAVBAR (Escritorio) */
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 80px;
+    background: #571e1e;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+img.logo { max-width: 70px; }
+.nombre-empresa { color: antiquewhite; font-size: 24px; font-weight: bold; margin-left: 10px; }
+.logo-container { display: flex; align-items: center; text-decoration: none; }
+
+#navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#navbar li {
+    list-style: none;
+    padding: 0 12px;
+    position: relative;
+}
+
+#navbar li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 300;
+    color: antiquewhite;
+    transition: 0.4s ease;
+}
+
+#navbar li a:hover,
+#navbar li a.active {
+    color: rgb(206, 174, 126);
+}
+
+#navbar li a.active::after,
+#navbar li a:hover::after {
+    content: "";
+    width: 30%;
+    height: 2px;
+    background: antiquewhite;
+    position: absolute;
+    bottom: -4px;
+    left: 13px;
+}
+
+.menu-toggle { display: none; } /* Ocultar en escritorio */
+
+/* ----------------------------------------------------- */
+
+/* Sección HERO */
+#hero {
+    background-image: url("../assets/herotry9.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 60vh;
+    width: 100%;
+    background-position: center;
+    padding: 0 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+}
+
+#hero h4 { padding: 15px 0; }
+#hero h1 { color: #601212; }
+
+#hero button {
+    background-image: url(../assets/button.png);
+    background-color: transparent;
+    color: #601212;
+    border: 0;
+    padding: 14px 80px 14px 65px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    font-style: italic;
+}
+
+/* ----------------------------------------------------- */
+
+/* FOOTER */
+.footer {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 80px;
+    background: #571e1e;
+    text-align: left;
+}
+
+.footer p { color: antiquewhite; margin: 0; }
+
+/* ----------------------------------------------------- */
+
+/* FORMULARIO DE CONTACTO */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 20px auto;
+    gap: 12px;
+}
+
+.contact-form label {
+    font-weight: 600;
+    color: #601212;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.contact-form button {
+    background: #601212;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.contact-form button:hover {
+    background: #9d4b4b;
+}
+
+/* ----------------------------------------------------- */
+
+/* FORMULARIO DE LOGIN */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 20px auto;
+    gap: 12px;
+}
+
+.login-form label {
+    font-weight: 600;
+    color: #601212;
+}
+
+.login-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.login-form button {
+    background: #601212;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.login-form button:hover {
+    background: #9d4b4b;
+}
+
+.login-form .registro {
+    text-align: center;
+    font-size: 14px;
+}
+.login-form .registro a {
+    color: #601212;
+    font-weight: bold;
+    text-decoration: none;
+}
+.login-form .registro a:hover {
+    text-decoration: underline;
+}
+
+/* ----------------------------------------------------- */
+
+/* CARDS SOBRE NOSOTROS */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card h3 {
+    font-size: 22px;
+    color: #601212;
+    padding: 10px 15px 0 15px;
+}
+
+.card p {
+    font-size: 15px;
+    color: #465b52;
+    padding: 10px 15px 15px 15px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ----------------------------------------------------- */
+
+/* COMPRAR PAGE */
+.comprar-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 80vh;
+}
+
+.opcion {
+    position: relative;
+    overflow: hidden;
+}
+
+.opcion img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.opcion .overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.opcion:hover img {
+    transform: scale(1.1);
+    filter: brightness(70%);
+}
+
+.opcion:hover .overlay {
+    opacity: 1;
+}
+
+/* ----------------------------------------------------- */
+
+/* Tarjetas de Vinos */
+.bloques-categorias {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categoria {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+.categoria img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.categoria h5{
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--vino, #7b1e1e);
+    margin: 12px 0 6px;
+}
+
+.categoria h4 {
+    font-size: 1rem;
+    line-height: 1.3;
+    margin: 8px 0 0;
+}
+
+.categoria .btn-comprar {
+    margin-top: auto;
+}
+
+.btn-comprar {
+    margin-top: 14px;
+    padding: 14px 20px;
+    width: 100%;
+    background: var(--vino, #7b1e1e);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-comprar:hover {
+    background: #5c1515;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-comprar:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ----------------------------------------------------- */
+
+/* RESPONSIVE DESIGN (Media Queries) */
+@media (max-width: 1024px) {
+    /* Tablets */
+    h1 { font-size: 48px; }
+    h2 { font-size: 36px; }
+    h3 { font-size: 28px; }
+    p { font-size: 15px; }
+
+    #header { padding: 10px 40px; }
+    #hero { padding: 0 40px; background-attachment: scroll; }
+    .footer { padding: 10px 40px; }
+    
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    /* Móviles */
+    h1 { font-size: 36px; line-height: 44px; }
+    h2 { font-size: 28px; line-height: 36px; }
+    h3 { font-size: 22px; line-height: 30px; }
+    p { font-size: 14px; }
+
+    .section-p1 { padding: 20px 20px; }
+    #header { padding: 10px 20px;
+    position: relative; }
+    #hero { padding: 0 20px; }
+    
+    /* Footer en móvil */
+    .footer {
+        padding: 10px 20px;
+    }
+
+    /* Navbar móvil */
+    #navbar {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        top: 60px;
+        right: -200px; /* Ajustado para que se deslice desde la derecha */
+        background: #571e1e;
+        width: 200px;
+        padding-top: 20px;
+        transition: right 0.4s ease;
+    }
+    
+    #navbar li {
+        width: 100%;
+        padding: 10px 0;
+    }
+    
+    #navbar li a {
+        font-size: 18px;
+        padding: 10px;
+        color: #fff;
+    }
+    
+    #navbar li a.active::after,
+    #navbar li a:hover::after {
+        left: 0;
+    }
+    
+    #navbar.open {
+        right: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        font-size: 28px;
+        color: white;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+    
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    .card img {
+        height: 200px;
+    }
+    
+    .comprar-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .opcion .overlay {
+        font-size: 2rem;
+    }
+}
+
+/* Estilos para el contenedor de mensajes */
+.messages-container {
+    list-style: none;
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    position: fixed; /* Posiciona el contenedor de forma fija */
+    top: 0; /* Lo fija en la parte superior de la ventana */
+    width: 100%;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    box-sizing: border-box;
+}
+
+.messages-container li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos específicos para cada tipo de mensaje */
+.messages-container .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.messages-container .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}

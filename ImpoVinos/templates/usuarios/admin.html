@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso Administrador - ImpoVinos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+      {% if messages %}
+    <ul class="messages-container">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+      {% endif %}
+
+    <div class="site">
+        
+            {% include 'misc/navbar.html' %} 
+
+
+        <section id="formulario">
+            <h2>Ingreso Administrador</h2>
+            <form id="adminForm" method="post" action="{% url 'ingresa_admin' %}">
+                {% csrf_token %} {% if messages %}
+                  <ul class="messages">
+                    {% for message in messages %}
+                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+                <label for="usuario">Usuario Administrador:</label>
+                <input type="text" id="usuario" name="usuario" required>
+
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Ingresar</button>
+            </form>
+        </section>
+
+        <footer>
+            <div class="footer">
+                <p>© Todos los derechos reservados, Grupo 10 Semana 3</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="{% static 'scripts/scripts.js' %}"></script>
+</body>
+</html>
