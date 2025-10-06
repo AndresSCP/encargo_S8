@@ -1,0 +1,16 @@
+Para asegurarnos de que corra la app sin problemas
+instalar con pip install:
+Django 
+djangorestframework
+oracledb
+requests
+python-dotenv
+
+
+Ademas, estamos usando BD local, en settings pueden encontrar los datos de usuario, encontrar
+
+Finalmente, deben crear su archivo .env con la base que tiene el env.example y rellenarlo con la key de la API. Esta key se obtiene
+creando una cuenta en su pagina, eligen el plan gratis que tiene limite de consultas. La key es personal, ojo con eso.
+Pueden crear la cuenta vinculando su cuenta GitHub y se hace mas rapido el proceso.
+
+Nuevamente, recuerden que la API tiene consultas limitadas, traten de no hacer tantos request innecesarios.

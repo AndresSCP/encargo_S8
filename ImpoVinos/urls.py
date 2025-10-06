@@ -3,12 +3,14 @@ from . import views
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from .views import VinoViewSet
+from .external_views import WineExplorerSearchView
 
 router = DefaultRouter()
 router.register(r'vinos', VinoViewSet, basename='vinos')
 
 urlpatterns = [
     path('v1/', include(router.urls)),
+    path('v1/external/wine-explorer/search/', WineExplorerSearchView.as_view(), name='wine-explorer-search'),
     # Para la landing page
     path("", views.index, name="index"),
 
