@@ -5,6 +5,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from .models import Vino, Categoria
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .serializers import VinoSerializer
 
 # Create your views here.
 
@@ -169,3 +173,32 @@ def eliminar_vino(request, vino_id):
         vino.delete()
     return redirect('inventario')
 
+
+class VinoViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = VinoSerializer
+
+    def get_queryset(self):
+        qs = Vino.objects.all()
+        order = self.request.query_params.get('order', '-id')
+        # por seguridad dejamos ordenamientos permitidos
+        allowed = {'-id', 'id', '-anio', 'anio', '-precio', 'precio', 'nombre', '-nombre'}
+        if order not in allowed:
+            order = '-id'
+        # opcional: random=1 para aleatorios
+        if self.request.query_params.get('random') in {'1', 'true', 'True'}:
+            return qs.order_by('?')
+        return qs.order_by(order)
+
+    @action(detail=False, methods=['get'], url_path='nacionales')
+    def nacionales(self, request):
+        base_country = request.query_params.get('base_country', 'Chile')
+        vinos = self.get_queryset().filter(pais_origen__iexact=base_country)[:6]
+        data = self.get_serializer(vinos, many=True).data
+        return Response({"count": len(data), "results": data})
+
+    @action(detail=False, methods=['get'], url_path='importados')
+    def importados(self, request):
+        base_country = request.query_params.get('base_country', 'Chile')
+        vinos = self.get_queryset().exclude(pais_origen__iexact=base_country)[:6]
+        data = self.get_serializer(vinos, many=True).data
+        return Response({"count": len(data), "results": data})
