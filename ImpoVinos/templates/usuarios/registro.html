@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ImpoVinos - Registro</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
 <body>
   <div class="site">
     
@@ -16,7 +17,20 @@
       <h2>Crear Cuenta</h2>
       <p>Regístrate para poder comprar y revisar tus pedidos.</p>
 
-      <form id="registroForm" class="login-form">
+      <!-- Mostrar mensajes de error o éxito -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+               background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; 
+               color: {% if message.tags == 'error' %}#721c24{% else %}#155724{% endif %};">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" class="login-form">
+        {% csrf_token %}
+        
         <label for="nombre">Nombre completo</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -25,11 +39,10 @@
 
         <label for="clave">Contraseña</label>
         <input type="password" id="clave" name="clave" required>
+        <small style="color: #666;">Debe tener: mínimo 8 caracteres, una mayúscula, un número y un carácter especial</small>
 
         <label for="clave2">Repite tu contraseña</label>
         <input type="password" id="clave2" name="clave2" required>
-
-        <p id="error" style="display:none;"></p>
 
         <button type="submit">Registrarse</button>
         <p class="registro">¿Ya tienes cuenta? <a href="{% url 'ingresa' %}">Inicia sesión</a></p>

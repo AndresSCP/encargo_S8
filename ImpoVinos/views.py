@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.models import User
-from .models import Vino, Categoria
+from .models import Vino, Categoria, Usuario, Cliente
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import VinoSerializer
+import re
 
 # Create your views here.
 
@@ -71,7 +72,87 @@ def ingresa(request):
         # Si la solicitud es GET, simplemente muestra la página de ingreso
         return render(request, "usuarios/ingresa.html")
 
+from django.contrib.auth.hashers import make_password
+from .models import Usuario, Cliente
+import re
+
 def registro(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        correo = request.POST.get('correo')
+        clave = request.POST.get('clave')
+        clave2 = request.POST.get('clave2')
+
+        # Validación 1: Las contraseñas deben coincidir
+        if clave != clave2:
+            messages.error(request, 'Las contraseñas no coinciden.')
+            return render(request, "usuarios/registro.html")
+
+        # Validación 2: Longitud mínima de 8 caracteres
+        if len(clave) < 8:
+            messages.error(request, 'La contraseña debe tener al menos 8 caracteres.')
+            return render(request, "usuarios/registro.html")
+
+        # Validación 3: Debe contener al menos una letra mayúscula
+        if not re.search(r'[A-Z]', clave):
+            messages.error(request, 'La contraseña debe contener al menos una letra mayúscula.')
+            return render(request, "usuarios/registro.html")
+
+        # Validación 4: Debe contener al menos un número
+        if not re.search(r'\d', clave):
+            messages.error(request, 'La contraseña debe contener al menos un número.')
+            return render(request, "usuarios/registro.html")
+
+        # Validación 5: Debe contener al menos un carácter especial
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', clave):
+            messages.error(request, 'La contraseña debe contener al menos un carácter especial (!@#$%^&*...).')
+            return render(request, "usuarios/registro.html")
+
+        # Validación 6: Longitud máxima de 128 caracteres
+        if len(clave) > 128:
+            messages.error(request, 'La contraseña no puede tener más de 128 caracteres.')
+            return render(request, "usuarios/registro.html")
+
+        # Verificar si el correo ya está registrado
+        if User.objects.filter(username=correo).exists():
+            messages.error(request, 'Este correo ya está registrado.')
+            return render(request, "usuarios/registro.html")
+
+        try:
+            # Crear el usuario de Django (para autenticación)
+            user = User.objects.create_user(
+                username=correo,
+                email=correo,
+                password=clave,
+                first_name=nombre
+            )
+
+            # Crear el usuario en tu modelo personalizado
+            usuario = Usuario.objects.create(
+                nombre=nombre,
+                email=correo,
+                password=make_password(clave),
+                es_admin=False
+            )
+
+            # Crear el cliente asociado (con datos por defecto, puede actualizar después)
+            Cliente.objects.create(
+                usuario=usuario,
+                direccion='',  # Se puede completar en modificar perfil
+                telefono=''
+            )
+
+            # Iniciar sesión automáticamente después del registro
+            user = authenticate(request, username=correo, password=clave)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'¡Bienvenido {nombre}! Tu cuenta ha sido creada exitosamente.')
+                return redirect('index')
+
+        except Exception as e:
+            messages.error(request, f'Error al crear la cuenta: {str(e)}')
+            return render(request, "usuarios/registro.html")
+
     return render(request, "usuarios/registro.html")
 
 def recuperar(request):
