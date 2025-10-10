@@ -3,6 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from .views import VinoViewSet
+from .external_views import WineExplorerSearchView, WeatherCurrentView
 
 router = DefaultRouter()
 router.register(r'vinos', VinoViewSet, basename='vinos')
@@ -11,6 +12,9 @@ urlpatterns = [
     path('v1/', include(router.urls)),
     # Para la landing page
     path("", views.index, name="index"),
+    path('v1/external/wine-explorer/search/', WineExplorerSearchView.as_view(), name='wine-explorer-search'),
+    path('v1/external/weather/current/', WeatherCurrentView.as_view(), name='weather-current'),
+
 
     # Interacciones (se puede cambiar este nombre)
     path("interacciones/comprar/", views.comprar, name="comprar"),
@@ -37,3 +41,5 @@ urlpatterns = [
     # URL para cerrar sesión
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
 ]
+
+

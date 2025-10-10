@@ -283,3 +283,19 @@ class VinoViewSet(viewsets.ReadOnlyModelViewSet):
         vinos = self.get_queryset().exclude(pais_origen__iexact=base_country)[:6]
         data = self.get_serializer(vinos, many=True).data
         return Response({"count": len(data), "results": data})
+    
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+class VinoViewSet(viewsets.ModelViewSet):
+    queryset = Vino.objects.all()
+    serializer_class = VinoSerializer
+
+    # --- NUEVO: endpoint público opcional ---
+    @action(detail=False, methods=['get'], url_path='publicos', permission_classes=[AllowAny])
+    def publicos(self, request):
+        """Lista de vinos visible sin autenticación JWT"""
+        queryset = self.get_queryset()[:6]  # puedes limitar los resultados
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
