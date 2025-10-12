@@ -1,59 +1,95 @@
 # ImpoVinos/external_views.py
-import os
 import requests
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 
-RAPIDAPI_HOST = os.environ.get(
-    "RAPIDAPI_HOST",
-    "wine-explorer-api-ratings-insights-and-search.p.rapidapi.com",  # host por defecto de esta API
-)
-RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY", "")
-
-BASE_URL = f"https://{RAPIDAPI_HOST}"
-SEARCH_PATH = "/search"  # del snippet: /search?wine_name=...
-
+# 🍷 API de Wine Explorer
 class WineExplorerSearchView(APIView):
     """
-    GET /api/v1/external/wine-explorer/search/?q=syrah
-    Traduce 'q' -> 'wine_name' para el proveedor.
-    Requiere RAPIDAPI_KEY (y opcionalmente RAPIDAPI_HOST) en variables de entorno.
+    API que consume datos de Wine Explorer (Sample APIs) y los devuelve como JSON.
+    Ejemplo:
+      /api/v1/external/wine-explorer/search/?wine=Cabernet
     """
+    permission_classes = []  # pública (no requiere token)
 
     def get(self, request):
-        if not RAPIDAPI_KEY:
+        query = request.query_params.get("wine", "")
+        if not query:
             return Response(
-                {"detail": "Falta RAPIDAPI_KEY en variables de entorno (.env)."},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                {"error": "Debe indicar un vino en el parámetro 'wine'."},
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
-        q = (request.query_params.get("q") or request.query_params.get("wine_name") or "").strip()
-        if not q:
-            return Response({"detail": "Falta parámetro 'q'."}, status=status.HTTP_400_BAD_REQUEST)
-
-        headers = {
-            "X-RapidAPI-Key": RAPIDAPI_KEY,
-            "X-RapidAPI-Host": RAPIDAPI_HOST,
-            "Accept": "application/json",
-        }
-        params = {"wine_name": q}  # este endpoint usa 'wine_name'
+        # API pública de vinos (puedes cambiarla si tienes otra URL oficial)
+        url = "https://api.sampleapis.com/wines/reds"
 
         try:
-            r = requests.get(BASE_URL + SEARCH_PATH, headers=headers, params=params, timeout=12)
-            r.raise_for_status()
-            # Intentar parsear JSON; si no, devolver texto
-            try:
-                data = r.json()
-            except ValueError:
-                data = {"raw": r.text}
-            return Response(data, status=r.status_code)
-        except requests.exceptions.HTTPError:
+            response = requests.get(url, timeout=8)
+            response.raise_for_status()
+        except requests.RequestException:
             return Response(
-                {"detail": "Error HTTP del proveedor", "status": r.status_code, "body": r.text[:1000]},
-                status=r.status_code,
+                {"error": "No se pudo conectar con la API externa de Wine Explorer."},
+                status=status.HTTP_502_BAD_GATEWAY,
             )
-        except requests.exceptions.RequestException as e:
-            return Response({"detail": f"Error de red externo: {e}"}, status=status.HTTP_502_BAD_GATEWAY)
+
+        wines = response.json()
+
+        # Filtrar por nombre o bodega que contengan el texto buscado
+        resultados = [
+            w for w in wines
+            if query.lower() in w.get("wine", "").lower() or query.lower() in w.get("winery", "").lower()
+        ]
+
+        # Devolver máximo 5 resultados
+        return Response(resultados[:5], status=status.HTTP_200_OK)
+
+
+# 🌤️ API del clima (Open-Meteo)
+class WeatherCurrentView(APIView):
+    """
+    Endpoint para consultar el clima actual por coordenadas.
+    Ejemplo:
+      /api/v1/external/weather/current/?lat=-33.45&lon=-70.66
+    """
+    permission_classes = []  # pública (sin token requerido)
+
+    def get(self, request):
+        try:
+            lat = float(request.query_params.get('lat', '-33.45'))  # Santiago de Chile
+            lon = float(request.query_params.get('lon', '-70.66'))
+        except ValueError:
+            return Response(
+                {"detail": "Parámetros lat/lon inválidos"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        url = "https://api.open-meteo.com/v1/forecast"
+        params = {
+            "latitude": lat,
+            "longitude": lon,
+            "current_weather": True,
+        }
+
+        try:
+            response = requests.get(url, params=params, timeout=8)
+            response.raise_for_status()
+        except requests.RequestException:
+            return Response(
+                {"detail": "Error al conectar con Open-Meteo"},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+
+        data = response.json().get("current_weather", {})
+        return Response(
+            {
+                "latitude": lat,
+                "longitude": lon,
+                "temperature": data.get("temperature"),
+                "windspeed": data.get("windspeed"),
+                "weathercode": data.get("weathercode"),
+                "time": data.get("time"),
+            },
+            status=status.HTTP_200_OK,
+        )
