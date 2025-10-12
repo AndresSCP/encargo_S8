@@ -5,6 +5,7 @@ djangorestframework
 oracledb
 requests
 python-dotenv
+djangorestframework-simplejwt
 
 
 Ademas, estamos usando BD local, en settings pueden encontrar los datos de usuario, encontrar
@@ -14,3 +15,30 @@ creando una cuenta en su pagina, eligen el plan gratis que tiene limite de consu
 Pueden crear la cuenta vinculando su cuenta GitHub y se hace mas rapido el proceso.
 
 Nuevamente, recuerden que la API tiene consultas limitadas, traten de no hacer tantos request innecesarios.
+
+
+--------*---*------*-----*---------*------------
+
+Para efectos del EFT:
+Aparentemente Heroku ya no es gratuito, y la unica alternativa que pudimos encontrar fue cloudflare, pero debido a que estamos usando BD local temenos dos opciones para poder desplegar la pagina:
+
+A) Desplegarla con un tunnel al localhost, y que un computador nuestro se comporte como un servidor, manteniendolo prendido y activo al menos hasta que el trabajo sea revisado, pero con los riesgos que involucra
+tener un puerto abierto y expuesto publicamente, ya sea robo de datos, malwares, DoS, etc. Por lo cual hemos decidido como grupo realizer la alternativa B
+
+B) Crear un instructivo para que la pagina se despliegue a traves de un tunnel a cloudflare y asi tanto nosotros como el profesor pueda desplegarla de manera local sin tener que exponerla a la red de manera innecesaria, evitando asi Tambien dejar uno de nuestros equipos activo y corriendo por un tiempo indeterminado.
+
+
+Para esto debemos hacer los siguientes pasos, asumiendo que hasta la entrega de la semana 8 ya todo lo demas esta instalado (oracle db, Django con todos sus elementos ya usados como Djangorestframework y -simplejwt, python-dotenv)
+Instalar lo siguiente en consola:
+(todas estas instalaciones de dependencias pueden ser en una virtual environment en caso que no quieran llenar su pc de cosas o mezclar con otros proyectos con riesgo de conflict de versions)
+
+1.- pip install cloudflare whitenoise   // y cualquier dependencia que les este faltando
+2.- ejecuten en consola: python manage.py collectstatic --noinput
+3.- ejecuten en consola: python manage.py runserver 0.0.0.0:8000  // esto es para echar a andar el server local, se debe hacer EN LA CARPETA DEL PROYECTO donde esta manage.py
+4.- dejar esa terminal abierta (dejen la consola abierta)
+5.- en una Nueva consola PowerShell ejecuten: winget install -e --id Cloudflare.cloudflared  // si es en mac para Caro usar: brew install cloudflared en bash (una vez instalado se puede cerrar esta consola)
+6.- En otra Nueva terminal  ejecutar: cloudflared tunnel --url http://localhost:8000  // esto va a hacer el tunnel temporal para conectar el host con su puerto local y asi pueda leer la BD. Solo va a servir mientras esta consola este abierta y la del server Tambien. Si cierran una de las dos o apagan su equipo, la conexion se perdera y Deben crear un nuevo tunnel.
+7.- Al crear el tunnel, en la misma consola imprimira muchos mensajes, pero uno de ellos estara "encuadrado" y mostrará un link que termina en .trycloudflare.com Ese es el link para su pagina desplegada conectada a su localhost.
+
+
+Importante y transcendental: las consolas del paso 3 y del paso 6 DEBEN permanecer abiertas luego de ejecutar los commandos descritos, o sino no va a abrir la pagina. Una vez hagan esa secuencia de instruccinoes, el link puede ser compartido. Si cierran alguna de las terminals, para Volver a desplegarla Deben crear un nuevo tunnel que les dara un nuevo link temporal. Entonces, para un nuevo despliegue solo Deben considerer los pasos 3, 6  y 7 que explica donde ver el link para abrir la pagina)
