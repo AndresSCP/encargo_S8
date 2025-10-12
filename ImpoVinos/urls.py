@@ -10,6 +10,7 @@ router.register(r'vinos', VinoViewSet, basename='vinos')
 
 urlpatterns = [
     path('v1/', include(router.urls)),
+    path('v1/external/wine-explorer/search/', WineExplorerSearchView.as_view(), name='wine-explorer-search'),
     # Para la landing page
     path("", views.index, name="index"),
     path('v1/external/wine-explorer/search/', WineExplorerSearchView.as_view(), name='wine-explorer-search'),
