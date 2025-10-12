@@ -1,43 +1,42 @@
 {% load static %}
 
 <section id="header">
-  <a href="{% url 'index' %}" class="logo-container">
-    <img src="{% static 'assets/logovino.webp' %}" class="logo" alt="logo">
-    <span class="nombre-empresa">ImpoVinos</span>
-  </a>
+    <a href="{% url 'index' %}" class="logo-container">
+        <img src="{% static 'assets/logovino.webp' %}" class="logo" alt="logo">
+        <span class="nombre-empresa">ImpoVinos</span>
+    </a>
 
-  <span class="menu-toggle" onclick="document.getElementById('navbar').classList.toggle('open')">&#9776;</span>
-  <div>
-    <ul id="navbar">
-      {% if request.user.is_authenticated %}
-        <li class="user-greeting">Hola, {{ request.user.username }}</li> 
-      {% endif %}
-      
-      <li><a href="{% url 'index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Inicio</a></li>
-      <li><a href="{% url 'nacionales' %}" {% if request.resolver_match.url_name == 'nacionales' %}class="active"{% endif %}>Nacionales</a></li>
-      <li><a href="{% url 'importados' %}" {% if request.resolver_match.url_name == 'importados' %}class="active"{% endif %}>Importados</a></li>
-      <li><a href="{% url 'nosotros' %}" {% if request.resolver_match.url_name == 'nosotros' %}class="active"{% endif %}>Sobre Nosotros</a></li>
-      <li><a href="{% url 'contacto' %}" {% if request.resolver_match.url_name == 'contacto' %}class="active"{% endif %}>Contacto</a></li>
+    <span class="menu-toggle" onclick="document.getElementById('navbar').classList.toggle('open')">&#9776;</span>
 
-      {% if request.user.is_authenticated %}
-        {% if request.user.is_superuser or request.user.is_staff %}
-            <li><a href="{% url 'inventario' %}" {% if request.resolver_match.url_name == 'inventario' %}class="active"{% endif %}>Inventario</a></li>
-            <li><a href="/admin/" {% if request.path|slice:":6" == '/admin' %}class="active"{% endif %}>Admin</a></li>
-        {% else %}
-            <li><a href="{% url 'carrito' %}" {% if request.resolver_match.url_name == 'carrito' %}class="active"{% endif %}>Carrito</a></li>    
+    <ul id="navbar"> 
+        {% if request.user.is_authenticated %}
+            <li class="user-greeting">Hola, {{ request.user.username }}</li> 
         {% endif %}
-        <li><a href="{% url 'perfil' %}">Mi Perfil</a></li>
         
-        <li class="logout-item">
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="logout-button">Cerrar Sesión</button>
-            </form>
-        </li>
-      {% else %}
-        <li><a href="{% url 'ingresa' %}" {% if request.resolver_match.url_name == 'ingresa' %}class="active"{% endif %}>Ingresa</a></li>
-        <li><a href="{% url 'registro' %}" {% if request.resolver_match.url_name == 'registro' %}class="active"{% endif %}>Regístrate</a></li>
-      {% endif %}
+        <li><a href="{% url 'index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Inicio</a></li>
+        <li><a href="{% url 'nacionales' %}" {% if request.resolver_match.url_name == 'nacionales' %}class="active"{% endif %}>Nacionales</a></li>
+        <li><a href="{% url 'importados' %}" {% if request.resolver_match.url_name == 'importados' %}class="active"{% endif %}>Importados</a></li>
+        <li><a href="{% url 'nosotros' %}" {% if request.resolver_match.url_name == 'nosotros' %}class="active"{% endif %}>Sobre Nosotros</a></li>
+        <li><a href="{% url 'contacto' %}" {% if request.resolver_match.url_name == 'contacto' %}class="active"{% endif %}>Contacto</a></li>
+
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser or request.user.is_staff %}
+                <li><a href="{% url 'inventario' %}" {% if request.resolver_match.url_name == 'inventario' %}class="active"{% endif %}>Inventario</a></li>
+                <li><a href="/admin/" {% if request.path|slice:":6" == '/admin' %}class="active"{% endif %}>Admin</a></li>
+            {% else %}
+                <li><a href="{% url 'carrito' %}" {% if request.resolver_match.url_name == 'carrito' %}class="active"{% endif %}>Carrito</a></li>    
+            {% endif %}
+            <li><a href="{% url 'perfil' %}">Mi Perfil</a></li>
+            
+            <li class="logout-item">
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Cerrar Sesión</button>
+                </form>
+            </li>
+        {% else %}
+            <li><a href="{% url 'ingresa' %}" {% if request.resolver_match.url_name == 'ingresa' %}class="active"{% endif %}>Ingresa</a></li>
+            <li><a href="{% url 'registro' %}" {% if request.resolver_match.url_name == 'registro' %}class="active"{% endif %}>Regístrate</a></li>
+        {% endif %}
     </ul>
-  </div>
 </section>

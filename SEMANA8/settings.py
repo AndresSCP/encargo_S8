@@ -9,13 +9,6 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except Exception:
-    # dotenv no instalado: no pasa nada, solo no cargará .env
-    pass
 
 from pathlib import Path
 
@@ -142,3 +135,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
 #    "PAGE_SIZE": 10,
 #}
+
+
+# Configuración de Django REST Framework con autenticación JWT
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
